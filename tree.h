@@ -6,7 +6,7 @@
 typedef struct tree_node {
   struct tree_node *parent;
   struct tree_node *children[2];
-  void (*fun_ptr)(uint16_t*, uint8_t*);
+  void (*fun_ptr)(uint16_t*, uint8_t*); //points to our opcode function handler
 } tree_node_t;
 
 typedef struct tree {

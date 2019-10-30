@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include "io.h"
 #include "tree.h"
-#include <stdlib.h>
+#include "instruction.h"
 
 void do_stuff(uint16_t *num1, uint8_t *num2) {
     printf("%d, %d\n",*num1,*num2);
