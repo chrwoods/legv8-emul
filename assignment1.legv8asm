@@ -1,0 +1,138 @@
+// Written by Christopher Woods and Thomas Maloney
+B main
+
+reverseFill: //X0 = address of array, X1 = size
+ADD X9, X0, XZR
+ADD X10, X1, XZR
+rfLoop: CBZ X10, rfEnd
+STUR X10, [X9, #0]
+SUBI X10, X10, #1
+ADDI X9, X9, #8
+B rfLoop
+rfEnd: BR LR
+
+findSmallest: // X0 = address of array, X1 = size
+ADD X9, X0, XZR
+ADD X10, X1, XZR
+ADD X11, X9, XZR // The address of the smallest value in the array
+fsLoop: CBZ X10, fsEnd
+LDUR X12, [X9, #0]
+LDUR X13, [X11, #0]
+SUBS X15, X12, X13
+B.GE fsDontChange
+ADD X11, X9, XZR
+fsDontChange:
+SUBI X10, X10, #1
+ADDI X9, X9, #8
+B fsLoop
+fsEnd: ADD X0, X11, XZR 
+BR LR
+
+swap: // X0 = address of first value to swap, X1 = address of second value
+LDUR X9, [X0, #0]
+LDUR X10, [X1, #0]
+STUR X10, [X0, #0]
+STUR X9, [X1, #0]
+BR LR
+
+selectionSort: // X0 = address of array, X1 = size
+SUBI SP, SP, #32
+STUR X19, [SP, #24]
+STUR X20, [SP, #16]
+STUR X21, [SP, #8]
+STUR LR, [SP, #0]
+ADD X19, X0, XZR
+ADD X20, X1, XZR
+ADD X21, X19, XZR // Copy of base array address for returning
+ssLoop: CBZ X20, ssEnd
+ADD X0, X19, XZR
+ADD X1, X20, XZR
+BL findSmallest
+ADD X1, X19, XZR
+BL swap
+ADDI X19, X19, #8
+SUBI X20, X20, #1
+B ssLoop
+ssEnd: 
+ADD X0, X21, XZR
+LDUR LR, [SP, #0]
+LDUR X21, [SP, #8]
+LDUR X20, [SP, #16]
+LDUR X19, [SP, #24]
+ADDI SP, SP, #32
+BR LR
+
+iterativeBinarySearch: // X0 = address of array, X1 = size, X2 = search value
+ADD X9, X0, XZR
+LSL X10, X1, #3
+ADD X10, X10, X9
+LSR X11, X1, #1 // divide by 2 to get middle
+LSL X11, X11, #3
+ADD X11, X11, X9
+ibsLoop: SUBS X15, X9, X10
+B.GT ibsSearchNotFound
+LDUR X12, [X11, #0]
+SUBS X15, X12, X2
+B.LT ibsMiddleLessThanSearch
+B.EQ ibsMiddleEqualsSearch
+SUBI X10, X11, #8
+B ibsMiddleCompareEnd
+ibsMiddleEqualsSearch: ADD X0, X11, XZR
+BR LR
+ibsMiddleLessThanSearch: ADDI X9, X11, #8
+ibsMiddleCompareEnd: SUB X11, X10, X9
+LSR X11, X11, #4
+LSL X11, X11, #3
+ADD X11, X11, X9
+B ibsLoop
+ibsSearchNotFound: SUBI X0, XZR, #1
+BR LR
+
+recursiveBinarySearch: // X0 = address of first value in array, X1 = address of last value in array, X2 = searched value
+SUBI SP, SP, #8
+STUR LR, [SP, #0]
+SUBS X15, X0, X1
+B.GE rbsSearchNotFound
+SUB X9, X1, X0
+LSR X9, X9, #4
+LSL X9, X9, #3
+ADD X9, X0, X9
+LDUR X10, [X9, #0]
+SUBS X15, X10, X2
+B.LT rbsMiddleLessThanSearch
+B.EQ rbsMiddleEqualsSearch
+SUBI X1, X9, #8
+BL recursiveBinarySearch
+B rbsEnd
+rbsMiddleEqualsSearch: ADD X0, X9, XZR
+B rbsEnd
+rbsMiddleLessThanSearch: ADDI X0, X9, #8
+BL recursiveBinarySearch
+B rbsEnd
+rbsSearchNotFound: SUBI X0, XZR, #1
+rbsEnd: LDUR LR, [SP, #0]
+ADDI SP, SP, #8
+BR LR
+
+main: ADDI X19, XZR, #8 // set initial memory address of array
+ADDI X20, XZR, #243 // set array size
+ADD X0, XZR, X19
+ADD X1, XZR, X20
+BL reverseFill
+ADD X0, XZR, X19
+ADD X1, XZR, X20
+BL selectionSort
+ADDI X21, XZR, #79 // set search value
+ADD X0, XZR, X19
+ADD X1, XZR, X20
+ADD X2, XZR, X21
+BL iterativeBinarySearch
+ADD X22, XZR, X0 // set return value from IBS
+ADD X0, XZR, X19
+LSL X1, X20, #3
+ADD X1, X0, X1 // RBS takes last value memory address as param, not size
+ADD X2, XZR, X21
+BL recursiveBinarySearch
+SUB X9, X0, X22 // set difference between returns from IBS and RBS
+STUR X9, [XZR, #0] // set diff in main memory address 0
+DUMP
