@@ -7,7 +7,7 @@ void tree_init(tree_t *t) {
     t->root->parent = NULL;
 }
 
-tree_node_t *tree_insert(tree_t *t, char *bs, char *v) {
+tree_node_t *tree_insert(tree_t *t, char *bs, void (*fun_ptr)(uint16_t*, uint8_t*)) {
     tree_node_t *cur = t->root;
     char *ptr;
     for (ptr = bs; *ptr != '\0'; ptr++) {
@@ -18,11 +18,11 @@ tree_node_t *tree_insert(tree_t *t, char *bs, char *v) {
         }
         cur = cur->children[index];
     }
-    cur->value = v;
+    cur->fun_ptr = fun_ptr;
     return cur;
 }
 
-char *get_value(tree_t *t, char *bs) {
+void (*get_value(tree_t *t, char *bs))(uint16_t*, uint8_t*) {
     tree_node_t *cur = t->root;
     char *ptr;
     for (ptr = bs; *ptr != '\0'; ptr++) {
@@ -31,5 +31,5 @@ char *get_value(tree_t *t, char *bs) {
             return NULL;
         cur = cur->children[index];
     }
-    return cur->value; 
+    return cur->fun_ptr; 
 }
