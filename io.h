@@ -2,7 +2,7 @@
 #define IO_H
 
 #include <stdint.h>
-uint8_t* get_bytes_from_file(char* filename);
+uint8_t* get_bytes_from_file(char* filename, long* filelen);
 void hexdump(FILE *f, int8_t *start, size_t size);
 
 #endif

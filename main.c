@@ -11,9 +11,10 @@ void do_stuff(uint16_t *num1, uint8_t *num2) {
 
 int main(int argc, char *argv[]) {
   uint8_t* bytes;
+  long filelen;
   
   if (argc > 1) {
-    bytes = get_bytes_from_file(argv[1]);
+    bytes = get_bytes_from_file(argv[1], &filelen);
     printf("%d, %d\n", bytes[0], bytes[1]);
   } else {
     printf("No file was given.\n");
@@ -22,7 +23,9 @@ int main(int argc, char *argv[]) {
 
   tree_t* opcode_tree = init_opcode_tree();
 
-  run_instruction(opcode_tree, bytes, 0);
+  for(int i = 0; i < filelen; i += 4) {
+    run_instruction(opcode_tree, bytes + i, 0);
+  }
   
   /*uint16_t a = (1 << 9) + 1;
   uint8_t b = 120;
