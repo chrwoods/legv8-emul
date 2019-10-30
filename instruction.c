@@ -32,7 +32,7 @@ void get_d_format_params(uint8_t* instruction, uint16_t* address, uint8_t* op2, 
   *rt = get_param(instruction, 27, 5);
 }
 
-void get_i_format_params(uint8_t* instruction, uint8_t* immediate, uint8_t* rn, uint8_t* rd) {
+void get_i_format_params(uint8_t* instruction, uint16_t* immediate, uint8_t* rn, uint8_t* rd) {
   *immediate = get_param(instruction, 10, 12);
   *rn = get_param(instruction, 22, 5);
   *rd = get_param(instruction, 27, 5);
@@ -45,7 +45,14 @@ void placeholder(uint16_t* registers, uint8_t* instruction) {
 void instruction_add(uint16_t* registers, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
-  printf("ADD called on %d, %d, %d with shamt %d.\n", rm, rn, rd, shamt);
+  printf("ADD called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
+void instruction_addi(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rn, rd;
+  uint16_t immediate;
+  get_i_format_params(instruction, &immediate, &rn, &rd);
+  printf("ADDI called: X%d = X%d + #%d.\n", rd, rn, immediate);
 }
 
 tree_t* init_opcode_tree() {
@@ -53,8 +60,8 @@ tree_t* init_opcode_tree() {
   tree_init(t);
   
   tree_insert(t, "01010100", placeholder);
-
   tree_insert(t, "10001011000", instruction_add);
+  tree_insert(t, "1001000100", instruction_addi);
   
   return t;
 }
