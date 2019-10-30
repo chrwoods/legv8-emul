@@ -1,18 +1,24 @@
 #include "tree.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 void tree_init(tree_t *t) {
     t->root = malloc(sizeof(tree_node_t));
     t->root->parent = NULL;
+    t->root->children[0] = NULL;
+    t->root->children[1] = NULL;
 }
 
 tree_node_t* tree_insert(tree_t *t, char *bs, void (*fun_ptr)(uint16_t*, uint8_t*)) {
     tree_node_t *cur = t->root;
     for (; *bs != '\0'; bs++) {
+      printf("%c\n", *bs);
       int index = *bs == '0' ? 0 : 1;
-      if (!(cur->children[index])) {
-	cur->children[index] = malloc(sizeof(tree_node_t));
-	cur->children[index]->parent = cur;
+      if (cur->children[index] == NULL) {
+	(cur->children)[index] = malloc(sizeof(tree_node_t));
+	(cur->children)[index]->parent = cur;
+	(cur->children)[index]->children[0] = NULL;
+	(cur->children)[index]->children[1] = NULL;
       }
       cur = cur->children[index];
     }
