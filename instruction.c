@@ -31,6 +31,12 @@ void get_d_format_params(uint8_t* instruction, uint16_t* address, uint8_t* op2, 
   *rt = get_param(instruction, 27, 5);
 }
 
+void get_i_format_params(uint8_t* instruction, uint8_t* immediate, uint8_t* rn, uint8_t* rd) {
+  *immediate = get_param(instruction, 10, 12);
+  *rn = get_param(instruction, 22, 5);
+  *rd = get_param(instruction, 27, 5);
+}
+
 void placeholder(uint16_t* registers, uint8_t* instruction) {
   return;
 }
