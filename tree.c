@@ -34,23 +34,6 @@ void (*get_value(tree_t *t, char *bs))(uint16_t*, uint8_t*) {
     return cur->fun_ptr; 
 }
 
-tree_node_t *tree_insert_op(tree_t *t, uint16_t opcode, uint8_t oplength, void (*fun_ptr)(uint16_t*, uint8_t*)) {
-    tree_node_t *cur = t->root;
-    uint16_t offset = 10;
-    uint8_t i;
-    for (i = oplength; i > 0; i--) {
-      uint8_t index = (opcode & (1 << offset)) == 0 ? 0 : 1;
-      if (!cur->children[index]) {
-          cur->children[index] = malloc(sizeof(tree_node_t));
-          cur->children[index]->parent = cur;
-      }
-      cur = cur->children[index];
-      offset--;
-    }
-    cur->fun_ptr = fun_ptr;
-    return cur;
-}
-
 void (*get_value_op(tree_t *t, uint8_t *opcode))(uint16_t*, uint8_t*) {
   tree_node_t *cur = t->root;
   short offset = 7;
