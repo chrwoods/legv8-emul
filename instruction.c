@@ -49,16 +49,12 @@ void instruction_add(uint16_t* registers, uint8_t* instruction) {
 }
 
 tree_t* init_opcode_tree() {
-  printf("Hello!\n");
   tree_t* t = malloc(sizeof(tree_t)); 
   tree_init(t);
-  printf("Hello!\n");
   
   tree_insert(t, "01010100", placeholder);
-  printf("Hello!\n");
 
   tree_insert(t, "10001011000", instruction_add);
-  printf("Hello!\n");
   
   return t;
 }
@@ -68,7 +64,6 @@ short run_instruction(tree_t* opcode_tree, uint8_t* instruction, uint16_t* regis
   if (!instruction_handler) {
     return -1;
   }
-  printf("Helo!");
   instruction_handler(registers, instruction);
   return 0;
 }

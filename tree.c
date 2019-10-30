@@ -10,20 +10,19 @@ void tree_init(tree_t *t) {
 }
 
 tree_node_t* tree_insert(tree_t *t, char *bs, void (*fun_ptr)(uint16_t*, uint8_t*)) {
-    tree_node_t *cur = t->root;
-    for (; *bs != '\0'; bs++) {
-      printf("%c\n", *bs);
-      int index = *bs == '0' ? 0 : 1;
-      if (cur->children[index] == NULL) {
-	(cur->children)[index] = malloc(sizeof(tree_node_t));
-	(cur->children)[index]->parent = cur;
-	(cur->children)[index]->children[0] = NULL;
-	(cur->children)[index]->children[1] = NULL;
-      }
-      cur = cur->children[index];
+  tree_node_t *cur = t->root;
+  for (; *bs != '\0'; bs++) {
+    int index = *bs == '0' ? 0 : 1;
+    if (cur->children[index] == NULL) {
+	    cur->children[index] = malloc(sizeof(tree_node_t));
+	    cur->children[index]->parent = cur;
+	    cur->children[index]->children[0] = NULL;
+	    cur->children[index]->children[1] = NULL;
     }
-    cur->fun_ptr = fun_ptr;
-    return cur;
+    cur = cur->children[index];
+  }
+  cur->fun_ptr = fun_ptr;
+  return cur;
 }
 
 void (*get_value(tree_t *t, char *bs))(uint16_t*, uint8_t*) {
