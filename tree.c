@@ -51,7 +51,6 @@ tree_node_t *tree_insert_op(tree_t *t, uint16_t opcode, uint8_t oplength, void (
     return cur;
 }
 
-
 void (*get_value_op(tree_t *t, uint8_t *opcode))(uint16_t*, uint8_t*) {
   tree_node_t *cur = t->root;
   short offset = 7;
@@ -60,12 +59,11 @@ void (*get_value_op(tree_t *t, uint8_t *opcode))(uint16_t*, uint8_t*) {
       offset = 7;
       opcode++; //go to the next byte, assuming big-endian output
     }
-    uint8_t index = *opcode & (1 << offset);
+    uint8_t index = (*opcode >> offset--) & 1;
     cur = cur->children[index];
     if (!cur) {
       return NULL;
     }
-    offset--;
   }
   return cur->fun_ptr; 
 }
