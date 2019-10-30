@@ -5,7 +5,7 @@ RM = rm -f
 CFLAGS = -Wall -Werror -ggdb -funroll-loops
 
 BIN = main
-OBJS = main.o io.o tree.o instruction.o
+OBJS = main.o io.o tree.o instruction.o emulator.o
 
 all: $(BIN) #etags
 
