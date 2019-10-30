@@ -1,3 +1,6 @@
+#ifndef EMULATOR_H
+#define EMULATOR_H
+
 #include <stdint.h>
 #define NUM_REGISTERS 32
 #define MEM_SIZE 4096
@@ -12,3 +15,4 @@ typedef struct emulator_t {
 } emulator_t;
 
 emulator_t* init_emulator();
+#endif
