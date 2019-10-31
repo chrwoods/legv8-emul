@@ -7,12 +7,12 @@
 #define STACK_SIZE 512
 
 typedef struct emulator_t {
-  uint64_t* registers;
+  int64_t* registers;
   uint8_t* memory;
   uint8_t* stack;
   uint8_t* frame;
   short condition_codes[14];
 } emulator_t;
 
-emulator_t* init_emulator();
+emulator_t* init_emulator(uint8_t num_registers, uint16_t memory_size, uint16_t stack_size
 #endif

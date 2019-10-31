@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     run_instruction(opcode_tree, bytes + i, 0);
   }
 
-  emulator_t *e = init_emulator();
+  emulator_t *e = init_emulator(NUM_REGISTERS, MEM_SIZE, STACK_SIZE);
   e->memory[0] = 1;
   printf("%d\n",e->memory[0]); 
   
