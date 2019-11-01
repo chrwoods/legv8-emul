@@ -14,5 +14,6 @@ typedef struct emulator_t {
   short condition_codes[14];
 } emulator_t;
 
-emulator_t* init_emulator(uint8_t num_registers, uint16_t memory_size, uint16_t stack_size
+emulator_t* init_emulator(uint8_t num_registers, uint16_t memory_size, uint16_t stack_size);
+
 #endif
