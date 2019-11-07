@@ -40,4 +40,16 @@ void instruction_ands(uint16_t* registers, uint8_t* instruction) {
   printf("ANDS called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
+void instruction_orr(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  printf("ORR called: X%d = X%d | X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
+void instruction_eor(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  printf("EOR called: X%d = X%d ^ X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
 #endif

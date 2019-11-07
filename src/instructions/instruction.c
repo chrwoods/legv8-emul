@@ -17,6 +17,8 @@ void init_r_type_funcs(tree_t* t) {
   tree_insert(t, OP_SUBS, instruction_subs);
   tree_insert(t, OP_AND, instruction_and);
   tree_insert(t, OP_ANDS, instruction_ands);
+  tree_insert(t, OP_ORR, instruction_orr);
+  tree_insert(t, OP_EOR, instruction_eor);
 }
 
 void init_i_type_funcs(tree_t* t) {
@@ -26,6 +28,8 @@ void init_i_type_funcs(tree_t* t) {
   tree_insert(t, OP_SUBIS, instruction_subis);
   tree_insert(t, OP_ANDI, instruction_andi);
   tree_insert(t, OP_ANDIS, instruction_andis);
+  tree_insert(t, OP_ORRI, instruction_orri);
+  tree_insert(t, OP_EORI, instruction_eori);
 }
 
 void init_d_type_funcs(tree_t* t) {

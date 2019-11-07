@@ -8,6 +8,8 @@
 #define OP_SUBS "11101011000"
 #define OP_AND "10001010000"
 #define OP_ANDS "11101010000"
+#define OP_ORR "10101010000"
+#define OP_EOR "11101010000"
 
 /* I Format */
 #define OP_ADDI "1001000100"
@@ -16,6 +18,8 @@
 #define OP_SUBIS "1111000100"
 #define OP_ANDI "1001001000"
 #define OP_ANDIS "1111001000"
+#define OP_ORRI "1011001000"
+#define OP_EORI "1101001000"
 
 /* D Format */
 

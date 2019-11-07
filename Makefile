@@ -24,7 +24,7 @@ $(OBJ): $(ODIR)/%.o: %.c
 	@$(ECHO) Compiling $<
 	@$(CC) $(CFLAGS) -MMD -MF $(ODIR)/$*.d -o $@ -c $<
 
-.PHONY: all clean clobber etags
+.PHONY: all clean clobber 
 
 clean:
 	@$(ECHO) Removing all generated files
@@ -33,7 +33,3 @@ clean:
 clobber:
 	@$(ECHO) Removing backup files
 	@$(RM) *~ \#* *pgm
-
-#etags:
-#	@$(ECHO) Updating TAGS
-#	@etags *.[ch]
