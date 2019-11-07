@@ -58,7 +58,7 @@ void instruction_addi(uint16_t* registers, uint8_t* instruction) {
 
 void instruction_adds(uint16_t* registers, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
-  get_r_format_params(instruction, &immediate, &rn, &rd);
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("ADDS called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
