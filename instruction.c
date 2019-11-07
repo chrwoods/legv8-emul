@@ -56,6 +56,19 @@ void instruction_addi(uint16_t* registers, uint8_t* instruction) {
   printf("ADDI called: X%d = X%d + #%d.\n", rd, rn, immediate);
 }
 
+void instruction_adds(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &immediate, &rn, &rd);
+  printf("ADDS called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
+void instruction_addis(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rn, rd;
+  uint16_t immediate;
+  get_i_format_params(instruction, &immediate, &rn, &rd);
+  printf("ADDIS called: X%d = X%d + #%d.\n", rd, rn, immediate);
+}
+
 void instruction_sub(uint16_t* registers, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
@@ -82,6 +95,32 @@ void instruction_subis(uint16_t* registers, uint8_t* instruction) {
   printf("SUBIS called: X%d = X%d - #%d.\n", rd, rn, immediate);
 }
 
+void instruction_and(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  printf("AND called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
+void instruction_andi(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rn, rd;
+  uint16_t immediate;
+  get_i_format_params(instruction, &immediate, &rn, &rd);
+  printf("ANDI called: X%d = X%d & #%d.\n", rd, rn, immediate);
+}
+
+void instruction_ands(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  printf("ANDS called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
+void instruction_andis(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rn, rd;
+  uint16_t immediate;
+  get_i_format_params(instruction, &immediate, &rn, &rd);
+  printf("ANDIS called: X%d = X%d & #%d.\n", rd, rn, immediate);
+}
+
 tree_t* init_opcode_tree() {
   tree_t* t = malloc(sizeof(tree_t)); 
   tree_init(t);
@@ -89,10 +128,16 @@ tree_t* init_opcode_tree() {
   tree_insert(t, "01010100", placeholder);
   tree_insert(t, OP_ADD, instruction_add);
   tree_insert(t, OP_ADDI, instruction_addi);
+  tree_insert(t, OP_ADDS, instruction_adds);
+  tree_insert(t, OP_ADDIS, instruction_addis);
   tree_insert(t, OP_SUB, instruction_sub);
   tree_insert(t, OP_SUBI, instruction_subi);
   tree_insert(t, OP_SUBS, instruction_subs);
   tree_insert(t, OP_SUBIS, instruction_subis);
+  tree_insert(t, OP_AND, instruction_and);
+  tree_insert(t, OP_ANDI, instruction_andi);
+  tree_insert(t, OP_ANDS, instruction_ands);
+  tree_insert(t, OP_ANDIS, instruction_andis);
 
   return t;
 }
