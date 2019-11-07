@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "tree.h"
+#include "opcodes.h"
 
 int get_param(uint8_t* instruction, short offset, short length) {
   int temp = 0;
@@ -74,16 +75,24 @@ void instruction_subs(uint16_t* registers, uint8_t* instruction) {
   printf("SUBS called: X%d = X%d - X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
+void instruction_subis(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rn, rd;
+  uint16_t immediate;
+  get_i_format_params(instruction, &immediate, &rn, &rd);
+  printf("SUBIS called: X%d = X%d - #%d.\n", rd, rn, immediate);
+}
+
 tree_t* init_opcode_tree() {
   tree_t* t = malloc(sizeof(tree_t)); 
   tree_init(t);
   
   tree_insert(t, "01010100", placeholder);
-  tree_insert(t, "10001011000", instruction_add);
-  tree_insert(t, "1001000100", instruction_addi);
-  tree_insert(t, "11001011000", instruction_sub);
-  tree_insert(t, "1101000100", instruction_subi);
-  tree_insert(t, "11101011000", instruction_subs);
+  tree_insert(t, OP_ADD, instruction_add);
+  tree_insert(t, OP_ADDI, instruction_addi);
+  tree_insert(t, OP_SUB, instruction_sub);
+  tree_insert(t, OP_SUBI, instruction_subi);
+  tree_insert(t, OP_SUBS, instruction_subs);
+  tree_insert(t, OP_SUBIS, instruction_subis);
 
   return t;
 }
