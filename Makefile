@@ -4,26 +4,31 @@ RM = rm -f
 
 CFLAGS = -Wall -Werror -ggdb -funroll-loops
 
+ODIR = obj
+SDIR = src
 BIN = main
 OBJS = main.o io.o tree.o instruction.o emulator.o
+OBJ = $(patsubst %,$(ODIR)/%,$(OBJS))
+
+VPATH = $(SDIR):$(SDIR)/instructions
 
 all: $(BIN) #etags
 
-$(BIN): $(OBJS)
+$(BIN): $(OBJ)
 	@$(ECHO) Linking $@
 	@$(CC) $^ -o $@
 
 -include $(OBJS:.o=.d)
 
-%.o: %.c
+$(OBJ): $(ODIR)/%.o: %.c
 	@$(ECHO) Compiling $<
-	@$(CC) $(CFLAGS) -MMD -MF $*.d -c $<
+	@$(CC) $(CFLAGS) -MMD -MF $(ODIR)/$*.d -o $@ -c $<
 
 .PHONY: all clean clobber etags
 
 clean:
 	@$(ECHO) Removing all generated files
-	@$(RM) *.o $(BIN) *.d TAGS core vgcore.* gmon.out
+	@$(RM) $(ODIR)/*.o $(BIN) $(ODIR)/*.d TAGS core vgcore.* gmon.out
 
 clobber:
 	@$(ECHO) Removing backup files

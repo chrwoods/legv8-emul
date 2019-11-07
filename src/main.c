@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "io.h"
 #include "tree.h"
-#include "instruction.h"
+#include "instructions/instruction.h"
 #include "emulator.h"
 
 void do_stuff(uint16_t *num1, uint8_t *num2) {

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "tree.h"
+#include "../tree.h"
 #include "opcodes.h"
 
 int get_param(uint8_t* instruction, short offset, short length) {
