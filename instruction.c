@@ -68,6 +68,12 @@ void instruction_subi(uint16_t* registers, uint8_t* instruction) {
   printf("SUBI called: X%d = X%d - #%d.\n", rd, rn, immediate);
 }
 
+void instruction_subs(uint16_t* registers, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  printf("SUBS called: X%d = X%d - X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
 tree_t* init_opcode_tree() {
   tree_t* t = malloc(sizeof(tree_t)); 
   tree_init(t);
@@ -77,7 +83,8 @@ tree_t* init_opcode_tree() {
   tree_insert(t, "1001000100", instruction_addi);
   tree_insert(t, "11001011000", instruction_sub);
   tree_insert(t, "1101000100", instruction_subi);
-  
+  tree_insert(t, "11101011000", instruction_subs);
+
   return t;
 }
 
