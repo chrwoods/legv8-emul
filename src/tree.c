@@ -9,7 +9,7 @@ void tree_init(tree_t *t) {
     t->root->children[1] = NULL;
 }
 
-tree_node_t* tree_insert(tree_t *t, char *bs, void (*fun_ptr)(uint16_t*, uint8_t*)) {
+tree_node_t* tree_insert(tree_t *t, char *bs, void (*fun_ptr)(emulator_t*, uint8_t*)) {
   tree_node_t *cur = t->root;
   for (; *bs != '\0'; bs++) {
     int index = *bs == '0' ? 0 : 1;
@@ -25,7 +25,7 @@ tree_node_t* tree_insert(tree_t *t, char *bs, void (*fun_ptr)(uint16_t*, uint8_t
   return cur;
 }
 
-void (*get_value(tree_t *t, char *bs))(uint16_t*, uint8_t*) {
+void (*get_value(tree_t *t, char *bs))(emulator_t*, uint8_t*) {
     tree_node_t *cur = t->root;
     char *ptr;
     for (ptr = bs; *ptr != '\0'; ptr++) {
@@ -37,7 +37,7 @@ void (*get_value(tree_t *t, char *bs))(uint16_t*, uint8_t*) {
     return cur->fun_ptr; 
 }
 
-void (*get_value_op(tree_t *t, uint8_t *opcode))(uint16_t*, uint8_t*) {
+void (*get_value_op(tree_t *t, uint8_t *opcode))(emulator_t*, uint8_t*) {
   tree_node_t *cur = t->root;
   short offset = 7;
   while (!cur->fun_ptr) {
