@@ -5,6 +5,7 @@
 #include "instruction_utils.h"
 #include "r_type_funcs.h"
 #include "i_type_funcs.h"
+#include "d_type_funcs.h"
 
 void placeholder(emulator_t* registers, uint8_t* instruction) {
   return;
@@ -33,7 +34,8 @@ void init_i_type_funcs(tree_t* t) {
 }
 
 void init_d_type_funcs(tree_t* t) {
-
+  tree_insert(t, OP_LDUR, instruction_ldur);
+  tree_insert(t, OP_STUR, instruction_stur);
 }
 
 tree_t* init_opcode_tree() {
