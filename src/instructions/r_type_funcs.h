@@ -3,53 +3,63 @@
 
 #include <stdio.h>
 #include "instruction_utils.h"
+#include "../emulator.h"
 
-void instruction_add(uint16_t* registers, uint8_t* instruction) {
+void instruction_add(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("ADD called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_adds(uint16_t* registers, uint8_t* instruction) {
+void instruction_adds(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("ADDS called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_sub(uint16_t* registers, uint8_t* instruction) {
+void instruction_sub(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("SUB called: X%d = X%d - X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_subs(uint16_t* registers, uint8_t* instruction) {
+void instruction_subs(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("SUBS called: X%d = X%d - X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_and(uint16_t* registers, uint8_t* instruction) {
+void instruction_and(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("AND called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_ands(uint16_t* registers, uint8_t* instruction) {
+void instruction_ands(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("ANDS called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_orr(uint16_t* registers, uint8_t* instruction) {
+void instruction_orr(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("ORR called: X%d = X%d | X%d with shamt %d.\n", rd, rn, rm, shamt);
 }
 
-void instruction_eor(uint16_t* registers, uint8_t* instruction) {
+void instruction_eor(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   printf("EOR called: X%d = X%d ^ X%d with shamt %d.\n", rd, rn, rm, shamt);
+}
+
+void instruction_br(emulator_t* emulator, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+}
+
+void instruction_prnl(emulator_t* emulator, uint8_t* instruction) {
+  
 }
 
 #endif

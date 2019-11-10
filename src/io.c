@@ -22,6 +22,10 @@ char printable_char(uint8_t c) {
   return isprint(c) ? c : '.';
 }
 
+void print_line(char* to_print) {
+  printf("%s\n", to_print);
+}
+
 void hexdump(FILE *f, int8_t *start, size_t size) {
   size_t i;
 
