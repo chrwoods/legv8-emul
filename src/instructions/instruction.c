@@ -6,7 +6,7 @@
 #include "r_type_funcs.h"
 #include "i_type_funcs.h"
 
-void placeholder(uint16_t* registers, uint8_t* instruction) {
+void placeholder(emulator_t* registers, uint8_t* instruction) {
   return;
 }
 
@@ -49,11 +49,11 @@ tree_t* init_opcode_tree() {
   return t;
 }
 
-short run_instruction(tree_t* opcode_tree, uint8_t* instruction, uint16_t* registers) {
-  void (*instruction_handler)(uint16_t*, uint8_t*) = get_value_op(opcode_tree, instruction);
+short run_instruction(tree_t* opcode_tree, uint8_t* instruction, emulator_t* emulator) {
+  void (*instruction_handler)(emulator_t*, uint8_t*) = get_value_op(opcode_tree, instruction);
   if (!instruction_handler) {
     return -1;
   }
-  instruction_handler(registers, instruction);
+  instruction_handler(emulator, instruction);
   return 0;
 }
