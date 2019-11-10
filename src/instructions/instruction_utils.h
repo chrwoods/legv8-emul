@@ -22,9 +22,11 @@ int32_t convert_to_signed(uint32_t to_convert, short length) {
   uint32_t check = 1 << (length - 1);
   int32_t converted = to_convert;
   if ((to_convert & check) != 0) {
-    converted -= check;
-    converted *= -1;
+    check <<= 1;
+    check -= 1;
+    converted = converted ^ check;
     converted += 1;
+    converted *= -1;
   }
   return converted;
 }
