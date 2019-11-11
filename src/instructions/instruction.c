@@ -23,6 +23,10 @@ void init_r_type_funcs(tree_t* t) {
   tree_insert(t, OP_PRNT, instruction_prnt);
   tree_insert(t, OP_DUMP, instruction_dump);
   tree_insert(t, OP_HALT, instruction_halt);
+  tree_insert(t, OP_MUL, instruction_mul);
+  tree_insert(t, OP_DIV, instruction_div);
+  tree_insert(t, OP_LSL, instruction_lsl);
+  tree_insert(t, OP_LSR, instruction_lsr);
 }
 
 void init_i_type_funcs(tree_t* t) {

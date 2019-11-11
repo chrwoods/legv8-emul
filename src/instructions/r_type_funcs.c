@@ -123,3 +123,17 @@ void instruction_div(emulator_t* emulator, uint8_t* instruction) {
   int64_t result = get_reg(emulator, rn) / get_reg(emulator, rm);
   set_reg(emulator, rd, result, 1);
 }
+
+void instruction_lsl(emulator_t* emulator, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  int64_t result = get_reg(emulator, rn) << shamt;
+  set_reg(emulator, rd, result, 1);
+}
+
+void instruction_lsr(emulator_t* emulator, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  int64_t result = get_reg(emulator, rn) >> shamt;
+  set_reg(emulator, rd, result, 1);
+}

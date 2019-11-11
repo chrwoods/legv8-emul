@@ -17,4 +17,8 @@ void instruction_prnl(emulator_t* emulator, uint8_t* instruction);
 void instruction_prnt(emulator_t* emulator, uint8_t* instruction);
 void instruction_dump(emulator_t* emulator, uint8_t* instruction);
 void instruction_halt(emulator_t* emulator, uint8_t* instruction);
+void instruction_mul(emulator_t* emulator, uint8_t* instruction);
+void instruction_div(emulator_t* emulator, uint8_t* instruction);
+void instruction_lsl(emulator_t* emulator, uint8_t* instruction);
+void instruction_lsr(emulator_t* emulator, uint8_t* instruction);
 #endif
