@@ -95,10 +95,10 @@ void set_condition_codes(emulator_t* emulator, int64_t result) {
 }
 
 void halt(emulator_t* emulator) {
-  //dump(emulator);
-  printf("HALT CALLED AT: %lu\n", emulator->pc);
-  //destroy_emulator(emulator);
-  //exit(0);
+  dump(emulator);
+  //printf("HALT CALLED AT: %lu\n", emulator->pc);
+  destroy_emulator(emulator);
+  exit(0);
 }
 
 void shift_written(int8_t written[3], uint8_t num_times) {
@@ -118,13 +118,13 @@ int64_t get_reg(emulator_t* emulator, uint8_t index) {
   if (emulator->no_bypass[1] == index) {
     shift_written(emulator->no_bypass, 2);
     emulator->no_bypass_bubbles += 2;
-  } else if (emulator->no_bypass[1] == index - 32) {
+  } else if (emulator->no_bypass[1] == index + 32) {
     shift_written(emulator->no_bypass, 2);
     emulator->no_bypass_bubbles += 2;
   } else if (emulator->no_bypass[2] == index) {
     shift_written(emulator->no_bypass, 1);
     emulator->no_bypass_bubbles += 1;
-  } else if (emulator->no_bypass[2] == index - 32) {
+  } else if (emulator->no_bypass[2] == index + 32) {
     shift_written(emulator->no_bypass, 1);
     emulator->no_bypass_bubbles += 1;
   }
@@ -133,11 +133,11 @@ int64_t get_reg(emulator_t* emulator, uint8_t index) {
     shift_written(emulator->bypass, 1);
     emulator->bypass_bubbles += 1;
     emulator->data_hazards++;
-  } else if (emulator->bypass[1] == index - 32) {
+  } else if (emulator->bypass[1] == index + 32) {
     emulator->data_hazards++;
   } else if (emulator->bypass[2] == index) {
     emulator->data_hazards++;
-  } else if (emulator->bypass[2] == index - 32) {
+  } else if (emulator->bypass[2] == index + 32) {
     emulator->data_hazards++;
   }
   
