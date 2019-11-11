@@ -91,8 +91,8 @@ void set_condition_codes(emulator_t* emulator, int64_t result) {
 
 void halt(emulator_t* emulator) {
   dump(emulator);
-  destroy_emulator(emulator);
-  exit(0);
+  //destroy_emulator(emulator);
+  //exit(0);
 }
 
 void shift_written(int8_t written[3], uint8_t num_times) {

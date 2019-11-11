@@ -6,10 +6,6 @@
 #include "instructions/instruction.h"
 #include "emulator.h"
 
-void do_stuff(uint16_t *num1, uint8_t *num2) {
-    printf("%d, %d\n",*num1,*num2);
-}
-
 int main(int argc, char *argv[]) {
   uint8_t* bytes;
   long filelen;
@@ -25,29 +21,18 @@ int main(int argc, char *argv[]) {
   tree_t* opcode_tree = init_opcode_tree();
   
   emulator_t* e = init_emulator(NUM_REGISTERS, MEM_SIZE, STACK_SIZE);
-  /*e->memory[0] = 1;
-  printf("%d\n",e->memory[0]);*/
 
   while (e->pc < filelen) {
     run_instruction(opcode_tree, bytes + e->pc, e);
     e->pc += 4;
     printf("pc: %ld  filelen: %ld\n", e->pc, filelen);
+    e->instructions++;
   }
-  
-  /*uint16_t a = (1 << 9) + 1;
-  uint8_t b = 120;
-  uint16_t *pA = &a;
-  uint8_t *pB = &b;
-  
-  tree_t *t = malloc(sizeof(tree_t)); 
-  tree_init(t);
-  char* bs = "101";
-  uint8_t opcode = 5 << 5;
-  tree_node_t *leaf = tree_insert(t, bs, do_stuff);
-  (*leaf->fun_ptr)(pA,pB);
-  
-  void (*do_stuff_ptr)(uint16_t*,uint8_t*) = get_value_op(t, &opcode);
-  (*do_stuff_ptr)(pA,pB);*/
 
+  printf("Cycles: %lu\n", e->instructions);
+  printf("Data Hazards: %u\n", e->data_hazards);
+  printf("Bypass Bubbles: %u\n", e->bypass_bubbles);
+  printf("No Bypass Bubbles: %u\n", e->no_bypass_bubbles);
+    
   return 0;
 }
