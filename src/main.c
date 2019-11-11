@@ -25,12 +25,14 @@ int main(int argc, char *argv[]) {
   tree_t* opcode_tree = init_opcode_tree();
   
   emulator_t* e = init_emulator(NUM_REGISTERS, MEM_SIZE, STACK_SIZE);
-  e->memory[0] = 1;
-  printf("%d\n",e->memory[0]); 
-  
-  for(int i = 0; i < filelen; i += 4) {
-    run_instruction(opcode_tree, bytes + i, e);
+  /*e->memory[0] = 1;
+  printf("%d\n",e->memory[0]);*/
+
+  while (e->pc < filelen) {
+    run_instruction(opcode_tree, bytes + e->pc, e);
+    e->pc += 4;
   }
+  
   /*uint16_t a = (1 << 9) + 1;
   uint8_t b = 120;
   uint16_t *pA = &a;

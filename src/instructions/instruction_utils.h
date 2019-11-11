@@ -2,6 +2,7 @@
 #define INSTRUCTION_UTILS_H
 
 #include <stdint.h>
+#include "r_type_funcs.h"
 
 int32_t get_param(uint8_t* instruction, short offset, short length) {
   int32_t temp = 0;
@@ -58,6 +59,45 @@ void get_b_format_params(uint8_t* instruction, int32_t* address) {
 void get_cb_format_params(uint8_t* instruction, int32_t* address, uint8_t* rt) {
   *address = convert_to_signed(get_param(instruction, 8, 19), 19);
   *rt = get_param(instruction, 27, 5);
+}
+
+void set_condition_codes(emulator_t* emulator, int64_t result) {
+  short eq = 0;
+  short gt = 0;
+  short lt = 0;
+  if (result == 0) {
+    eq = 1;
+  } else if (result > 0) {
+    gt = 1;
+  } else {
+    lt = 1;
+  }
+  emulator->condition_codes[0] = eq;
+  emulator->condition_codes[1] = eq | gt;
+  emulator->condition_codes[2] = gt;
+  emulator->condition_codes[3] = gt;
+  emulator->condition_codes[4] = eq | gt;
+  emulator->condition_codes[5] = lt | eq;
+  emulator->condition_codes[6] = lt;
+  emulator->condition_codes[7] = lt | eq;
+  emulator->condition_codes[8] = lt;
+  emulator->condition_codes[9] = lt;
+  emulator->condition_codes[10] = !eq;
+  emulator->condition_codes[11] = eq | gt;
+}
+
+int64_t get_reg(emulator_t* emulator, short index) {
+  if (index < 0 || index > 31) {
+    instruction_halt(emulator, 0);
+  }
+  return emulator->registers[index];
+}
+
+int64_t set_reg(emulator_t* emulator, short index, int64_t value) {
+  if (index < 0 || index > 31) {
+    instruction_halt(emulator, 0);
+  }
+  emulator->registers[index] = value;
 }
 
 #endif
