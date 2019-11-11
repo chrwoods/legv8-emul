@@ -78,17 +78,20 @@ void set_condition_codes(emulator_t* emulator, int64_t result) {
     lt = 1;
   }
   emulator->condition_codes[0] = eq;
-  emulator->condition_codes[1] = eq | gt;
+  emulator->condition_codes[1] = !eq;
   emulator->condition_codes[2] = gt;
-  emulator->condition_codes[3] = gt;
-  emulator->condition_codes[4] = eq | gt;
-  emulator->condition_codes[5] = lt | eq;
-  emulator->condition_codes[6] = lt;
-  emulator->condition_codes[7] = lt | eq;
-  emulator->condition_codes[8] = lt;
-  emulator->condition_codes[9] = lt;
-  emulator->condition_codes[10] = !eq;
-  emulator->condition_codes[11] = eq | gt;
+  emulator->condition_codes[3] = lt;
+  emulator->condition_codes[4] = lt;
+  emulator->condition_codes[5] = gt | eq;
+  emulator->condition_codes[6] = 0;//lt;
+  emulator->condition_codes[7] = 0;//lt | eq;
+  emulator->condition_codes[8] = gt;
+  emulator->condition_codes[9] = lt | eq;
+  emulator->condition_codes[10] = gt | eq;
+  emulator->condition_codes[11] = lt;
+  emulator->condition_codes[12] = gt;
+  emulator->condition_codes[13] = lt | eq;
+
 }
 
 void halt(emulator_t* emulator) {
@@ -202,7 +205,7 @@ void set_data(emulator_t* emulator, uint16_t address, uint8_t reg, int64_t value
     offsetUpperBound = 4079;
   }
   uint16_t offset = result+address;
-  printf("offset: %d.\n", offset);
+  //printf("offset: %d.\n", offset);
   b.value = value;
   if (address < 0 || address > 4096 || offset < 0 || offset > offsetUpperBound)
     halt(emulator);

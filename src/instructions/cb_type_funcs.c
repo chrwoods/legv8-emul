@@ -37,7 +37,7 @@ void instruction_cbz(emulator_t* emulator, uint8_t* instruction) {
   int32_t address;
   uint8_t rt;
   get_cb_format_params(instruction, &address, &rt);
-  printf("X%d = %ld.\n",rt, get_reg(emulator,rt));
+  //printf("X%d = %ld.\n",rt, get_reg(emulator,rt));
   if (!get_reg(emulator, rt)) {
     emulator->pc += address * 4 - 4;
     add_control_hazard(emulator);
