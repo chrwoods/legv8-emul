@@ -9,6 +9,7 @@ void instruction_addi(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rn, rd;
   int16_t immediate;
   get_i_format_params(instruction, &immediate, &rn, &rd);
+  emulator->registers[rd] = emulator->registers[rn] + immediate;
   printf("ADDI called: X%d = X%d + #%d.\n", rd, rn, immediate);
 }
 
@@ -23,6 +24,7 @@ void instruction_subi(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rn, rd;
   int16_t immediate;
   get_i_format_params(instruction, &immediate, &rn, &rd);
+  emulator->registers[rd] = emulator->registers[rn] - immediate;
   printf("SUBI called: X%d = X%d - #%d.\n", rd, rn, immediate);
 }
 
