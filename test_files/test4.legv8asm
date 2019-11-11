@@ -1,0 +1,13 @@
+B main
+
+addTwo:
+ADDI X0, X0, #2
+BR LR
+
+main: 
+ADDI X1, XZR, #1
+PRNT X1
+ADD X0, X0, X1
+BL addTwo
+PRNT X0
+DUMP

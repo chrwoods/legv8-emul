@@ -75,6 +75,7 @@ void instruction_br(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   emulator->pc = get_reg(emulator, rn); //make sure this is Rn, book says Rt!
+  //printf("%ld.\n", emulator->pc);
   emulator->pc -= 4; //we're about to increment it by 4 in main.c, so we need to decrease it in preparation
 }
 
