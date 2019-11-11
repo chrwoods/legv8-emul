@@ -15,6 +15,10 @@
 #define OP_PRNT "01111111101"
 #define OP_DUMP "11111111110"
 #define OP_HALT "11111111111"
+#define OP_MUL "10011011000"
+#define OP_DIV "10011010110"
+#define OP_LSL "11010011011"
+#define OP_LSR "11010011010"
 
 /* I Format */
 #define OP_ADDI "1001000100"
