@@ -30,4 +30,13 @@
 #define OP_LDUR "11111000010"
 #define OP_STUR "11111000000"
 
+/* B Format */
+#define OP_B "000101"
+#define OP_BL "100101"
+
+/* CB Format */
+#define OP_BC "01010100"
+#define OP_CBZ "10110100"
+#define OP_CBNZ "10110101"
+
 #endif

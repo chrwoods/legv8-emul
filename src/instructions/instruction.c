@@ -6,6 +6,8 @@
 #include "r_type_funcs.h"
 #include "i_type_funcs.h"
 #include "d_type_funcs.h"
+#include "b_type_funcs.h"
+#include "cb_type_funcs.h"
 
 void init_r_type_funcs(tree_t* t) {
   tree_insert(t, OP_ADD, instruction_add);
@@ -39,6 +41,17 @@ void init_d_type_funcs(tree_t* t) {
   tree_insert(t, OP_STUR, instruction_stur);
 }
 
+void init_b_type_funcs(tree_t* t) {
+  tree_insert(t, OP_B, instruction_b);
+  tree_insert(t, OP_BL, instruction_bl);
+}
+
+void init_cb_type_funcs(tree_t* t) {
+  tree_insert(t, OP_BC, instruction_bcond);
+  tree_insert(t, OP_CBZ, instruction_cbz);
+  tree_insert(t, OP_CBNZ, instruction_cbnz);
+}
+
 tree_t* init_opcode_tree() {
   tree_t* t = malloc(sizeof(tree_t)); 
   tree_init(t);
@@ -46,6 +59,8 @@ tree_t* init_opcode_tree() {
   init_r_type_funcs(t);
   init_i_type_funcs(t);
   init_d_type_funcs(t);
+  init_b_type_funcs(t);
+  init_cb_type_funcs(t);
 
   return t;
 }
