@@ -1,0 +1,24 @@
+PRNT X0
+B l3
+l1:
+PRNT X1
+l2:
+PRNT X2
+
+func:
+PRNT X10
+BR LR
+
+
+l3:
+PRNT X3
+
+BL func
+
+PRNT X4
+
+PRNT X0
+ADDI X0, XZR, #10
+PRNT X0
+LSL X0, X0, #1
+PRNT X0
