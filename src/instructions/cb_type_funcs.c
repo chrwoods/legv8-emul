@@ -3,10 +3,10 @@
 
 void add_control_hazard(emulator_t* emulator) {
   emulator->control_hazards++;
-  emulator->bypass_bubbles += 3;
-  emulator->no_bypass_bubbles += 3;
-  shift_written(emulator->bypass, 3);
-  shift_written(emulator->no_bypass, 3);
+  emulator->bypass_bubbles += 2;
+  emulator->no_bypass_bubbles += 4;
+  shift_written(emulator->bypass, 2);
+  shift_written(emulator->no_bypass, 4);
 }
   
 
