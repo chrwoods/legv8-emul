@@ -27,5 +27,7 @@
 #define OP_EORI "1101001000"
 
 /* D Format */
+#define OP_LDUR "11111000010"
+#define OP_STUR "11111000000"
 
 #endif
