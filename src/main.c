@@ -23,15 +23,14 @@ int main(int argc, char *argv[]) {
   }
 
   tree_t* opcode_tree = init_opcode_tree();
-
-  for(int i = 0; i < filelen; i += 4) {
-    run_instruction(opcode_tree, bytes + i, 0);
-  }
-
-  emulator_t *e = init_emulator(NUM_REGISTERS, MEM_SIZE, STACK_SIZE);
+  
+  emulator_t* e = init_emulator(NUM_REGISTERS, MEM_SIZE, STACK_SIZE);
   e->memory[0] = 1;
   printf("%d\n",e->memory[0]); 
   
+  for(int i = 0; i < filelen; i += 4) {
+    run_instruction(opcode_tree, bytes + i, e);
+  }
   /*uint16_t a = (1 << 9) + 1;
   uint8_t b = 120;
   uint16_t *pA = &a;

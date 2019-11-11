@@ -2,8 +2,10 @@
 #define R_TYPE_FUNCS_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "instruction_utils.h"
 #include "../emulator.h"
+#include "../io.h"
 
 void instruction_add(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
@@ -59,7 +61,27 @@ void instruction_br(emulator_t* emulator, uint8_t* instruction) {
 }
 
 void instruction_prnl(emulator_t* emulator, uint8_t* instruction) {
-  
+  print_line("");
+}
+
+void instruction_prnt(emulator_t* emulator, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  print_register(rd, emulator->registers[rd]);
+}
+
+void instruction_dump(emulator_t* emulator, uint8_t* instruction) {
+  print_line("Stack:");
+  hexdump(emulator->stack, STACK_SIZE);
+  print_line("");
+  print_line("Main Memory:");
+  hexdump(emulator->memory, MEM_SIZE);
+}
+
+void instruction_halt(emulator_t* emulator, uint8_t* instruction) {
+  instruction_dump(emulator, instruction);
+  //TODO: change handle allocated memory before exit
+  exit(0);
 }
 
 #endif
