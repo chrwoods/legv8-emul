@@ -27,7 +27,9 @@ void print_line(char* to_print) {
 }
 
 void print_register(short num, int64_t content) {
-  printf("X%d: %016lx (%ld)\n", num, (uint64_t)content, content);
+  char* spacing = "  ";
+  if (num > 9) spacing = " ";
+  printf("X%d:%s%016lx (%ld)\n", num, spacing, (uint64_t)content, content);
 }
 
 void hexdump(uint8_t* start, size_t size) {
