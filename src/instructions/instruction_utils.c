@@ -95,10 +95,12 @@ void halt(emulator_t* emulator) {
   exit(0);
 }
 
-void shift_read_instructions(emulator_t* emulator) {
-  emulator->gap = emulator->prev;
-  emulator->prev = emulator->cur;
-  emulator->cur = -1;
+void shift_written(int8_t written[3], uint8_t num_times) {
+  for (uint8_t i = 0; i < num_times; i++) {
+    written[2] = written[1];
+    written[1] = written[0];
+    written[0] = -1;
+  }
 }
 
 int64_t get_reg(emulator_t* emulator, uint8_t index) {
@@ -106,15 +108,31 @@ int64_t get_reg(emulator_t* emulator, uint8_t index) {
     halt(emulator);
   }
 
-  //TODO: fix
-  if (emulator->prev == index) {
-    emulator->data_hazards[0]++; 
-  } else if (emulator->prev == index - 32) {
-    emulator->data_hazards[2]++;
-  } else if (emulator->gap == index) {
-    emulator->data_hazards[1]++;
-  } else if (emulator->gap == index - 32) {
-    emulator->data_hazards[3]++;
+  // if we have a bubble, we add to our bubble count and shift our recently written register memory back by one since we had a bubble
+  if (emulator->no_bypass[1] == index) {
+    shift_written(emulator->no_bypass, 2);
+    emulator->no_bypass_bubbles += 2;
+  } else if (emulator->no_bypass[1] == index - 32) {
+    shift_written(emulator->no_bypass, 2);
+    emulator->no_bypass_bubbles += 2;
+  } else if (emulator->no_bypass[2] == index) {
+    shift_written(emulator->no_bypass, 1);
+    emulator->no_bypass_bubbles += 1;
+  } else if (emulator->no_bypass[2] == index - 32) {
+    shift_written(emulator->no_bypass, 1);
+    emulator->no_bypass_bubbles += 1;
+  }
+  
+  if (emulator->bypass[1] == index) {
+    shift_written(emulator->bypass, 1);
+    emulator->bypass_bubbles += 1;
+    emulator->data_hazards++;
+  } else if (emulator->bypass[1] == index - 32) {
+    emulator->data_hazards++;
+  } else if (emulator->bypass[2] == index) {
+    emulator->data_hazards++;
+  } else if (emulator->bypass[2] == index - 32) {
+    emulator->data_hazards++;
   }
   
   return emulator->registers[index];
@@ -127,9 +145,11 @@ void set_reg(emulator_t* emulator, uint8_t index, int64_t value, uint8_t is_alu)
   
   if (index != 31) {
     emulator->registers[index] = value;
-    emulator->cur = is_alu * 32 + index;
+    emulator->bypass[0] = is_alu * 32 + index;
+    emulator->no_bypass[0] = is_alu * 32 + index;
   } else {
-    emulator->cur = -1;
+    emulator->bypass[0] = -1;
+    emulator->no_bypass[0] = -1;
   }
 }
 

@@ -58,7 +58,8 @@ short run_instruction(tree_t* opcode_tree, uint8_t* instruction, emulator_t* emu
   instruction_handler(emulator, instruction);
 
   // shift recently read instructions back by one
-  shift_read_instructions(emulator);
+  shift_written(emulator->bypass, 1);
+  shift_written(emulator->no_bypass, 1);
   
   return 0;
 }

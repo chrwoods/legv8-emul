@@ -9,7 +9,7 @@ void instruction_add(emulator_t* emulator, uint8_t* instruction) {
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   //printf("ADD called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) + get_reg(emulator, rn);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_adds(emulator_t* emulator, uint8_t* instruction) {
@@ -18,7 +18,7 @@ void instruction_adds(emulator_t* emulator, uint8_t* instruction) {
   //printf("ADDS called: X%d = X%d + X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) + get_reg(emulator, rn);
   set_condition_codes(emulator, result);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_sub(emulator_t* emulator, uint8_t* instruction) {
@@ -26,7 +26,7 @@ void instruction_sub(emulator_t* emulator, uint8_t* instruction) {
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   //printf("SUB called: X%d = X%d - X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) - get_reg(emulator, rn);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_subs(emulator_t* emulator, uint8_t* instruction) {
@@ -35,7 +35,7 @@ void instruction_subs(emulator_t* emulator, uint8_t* instruction) {
   //printf("SUBS called: X%d = X%d - X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) - get_reg(emulator, rn);
   set_condition_codes(emulator, result);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_and(emulator_t* emulator, uint8_t* instruction) {
@@ -43,7 +43,7 @@ void instruction_and(emulator_t* emulator, uint8_t* instruction) {
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   //printf("AND called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) & get_reg(emulator, rn);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_ands(emulator_t* emulator, uint8_t* instruction) {
@@ -52,7 +52,7 @@ void instruction_ands(emulator_t* emulator, uint8_t* instruction) {
   //printf("ANDS called: X%d = X%d & X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) & get_reg(emulator, rn);
   set_condition_codes(emulator, result);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_orr(emulator_t* emulator, uint8_t* instruction) {
@@ -60,7 +60,7 @@ void instruction_orr(emulator_t* emulator, uint8_t* instruction) {
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   //printf("ORR called: X%d = X%d | X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) | get_reg(emulator, rn);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_eor(emulator_t* emulator, uint8_t* instruction) {
@@ -68,7 +68,7 @@ void instruction_eor(emulator_t* emulator, uint8_t* instruction) {
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   //printf("EOR called: X%d = X%d ^ X%d with shamt %d.\n", rd, rn, rm, shamt);
   int64_t result = get_reg(emulator, rm) ^ get_reg(emulator, rn);
-  set_reg(emulator, rd, result);
+  set_reg(emulator, rd, result, 1);
 }
 
 void instruction_br(emulator_t* emulator, uint8_t* instruction) {
