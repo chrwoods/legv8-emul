@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   while (e->pc < filelen) {
     run_instruction(opcode_tree, bytes + e->pc, e);
     e->pc += 4;
-    printf("pc: %ld  filelen: %d\n", e->pc, filelen);
+    //printf("pc: %ld  filelen: %ld\n", e->pc, filelen);
   }
   
   /*uint16_t a = (1 << 9) + 1;

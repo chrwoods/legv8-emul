@@ -1,5 +1,6 @@
 #include "../io.h"
 #include "instruction_utils.h"
+#include <stdio.h>
 
 /* maybe move to its own file but probably not*/
 typedef union bytes {
@@ -115,8 +116,10 @@ int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg) {
     halt(emulator);
   
   uint16_t i;
-  for (i = offset; i < offset+8; i++)
-    b.byteArr[offset+7-i] = emulator->memory[i];
+  for (i = 0; i < 8; i++) {
+    b.byteArr[7-i] = emulator->memory[offset+i];
+    //printf("byte: %d, address: %d, index: %d.\n", b.byteArr[7-i], i, 7-i);
+  }
   return b.value;
 }
 
@@ -124,13 +127,15 @@ void set_data(emulator_t* emulator, uint16_t address, uint8_t reg, int64_t value
   bytes_t b;
   int64_t result = get_reg(emulator, reg);
   uint16_t offset = result+address;
-  b.value = result;
+  b.value = value;
   if (address < 0 || address > 4096 || offset < 0 || offset > 4079)
     halt(emulator);
   uint16_t writeStart = 7-(offset%8)+offset;
   uint16_t i;
+  printf("value: %ld.\n", b.value);
   for (i=0; i < 8-(offset%8);i++) {
-    emulator->memory[writeStart-i] = b.byteArr[7-(offset%8)-i];
+    //printf("byte: %d, address: %d.\n", b.byteArr[i+(offset%8)], writeStart-i);
+    emulator->memory[writeStart-i] = b.byteArr[i+(offset%8)];
   }
 
   //emulator->memory[reg+address] = b.value;  
