@@ -7,7 +7,7 @@ CFLAGS = -Wall -Werror -ggdb -funroll-loops
 ODIR = obj
 SDIR = src
 BIN = main
-OBJS = main.o emulator.o instruction_utils.o r_type_funcs.o i_type_funcs.o d_type_funcs.o io.o tree.o instruction.o
+OBJS = main.o emulator.o instruction_utils.o r_type_funcs.o i_type_funcs.o d_type_funcs.o b_type_funcs.o cb_type_funcs.o io.o tree.o instruction.o
 OBJ = $(patsubst %,$(ODIR)/%,$(OBJS))
 
 VPATH = $(SDIR):$(SDIR)/instructions
