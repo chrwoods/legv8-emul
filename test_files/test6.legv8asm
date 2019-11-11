@@ -1,0 +1,6 @@
+SUBS X15, X0, X0
+B.GE b2
+B b1
+
+b1: PRNT X1
+b2: PRNT X2
