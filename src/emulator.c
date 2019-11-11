@@ -25,7 +25,11 @@ emulator_t* init_emulator(uint8_t num_registers, uint16_t memory_size, uint16_t 
     e->condition_codes[i] = 0;
   }
 
-  //TODO: init FP + SP
+  //init SP + FP
+  e->registers[28] = stack_size;
+  e->registers[29] = stack_size;
+
+  e->pc = 0;
   
   return e;
 }

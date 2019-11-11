@@ -12,6 +12,7 @@ typedef struct emulator_t {
   uint8_t* stack;
   uint8_t* frame;
   short condition_codes[14];
+  uint64_t pc;
 } emulator_t;
 
 emulator_t* init_emulator(uint8_t num_registers, uint16_t memory_size, uint16_t stack_size);

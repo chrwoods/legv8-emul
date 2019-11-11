@@ -58,6 +58,7 @@ void instruction_eor(emulator_t* emulator, uint8_t* instruction) {
 void instruction_br(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  
 }
 
 void instruction_prnl(emulator_t* emulator, uint8_t* instruction) {
@@ -81,6 +82,7 @@ void instruction_dump(emulator_t* emulator, uint8_t* instruction) {
   print_line("");
   print_line("Main Memory:");
   hexdump(emulator->memory, MEM_SIZE);
+  //TODO: compile machine code into assembly for some godforsaken reason
 }
 
 void instruction_halt(emulator_t* emulator, uint8_t* instruction) {
