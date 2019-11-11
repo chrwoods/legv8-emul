@@ -154,6 +154,10 @@ void set_reg(emulator_t* emulator, uint8_t index, int64_t value, uint8_t is_alu)
   }
 }
 
+/*
+* May God rest anyone's soul who tries to maintain the following two methods
+*/
+
 int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg) {
   bytes_t b;
   int64_t result = get_reg(emulator, reg);
