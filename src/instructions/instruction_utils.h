@@ -13,6 +13,8 @@ void get_b_format_params(uint8_t* instruction, int32_t* address);
 void get_cb_format_params(uint8_t* instruction, int32_t* address, uint8_t* rt);
 void set_condition_codes(emulator_t* emulator, int64_t result);
 void halt(emulator_t* emulator);
-int64_t get_reg(emulator_t* emulator, short index);
-void set_reg(emulator_t* emulator, short index, int64_t value);
+int64_t get_reg(emulator_t* emulator, uint8_t index);
+void set_reg(emulator_t* emulator, uint8_t index, int64_t value);
+int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg);
+void set_data(emulator_t* emulator, uint16_t address, uint8_t reg, int64_t value);
 #endif

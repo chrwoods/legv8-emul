@@ -1,5 +1,12 @@
 #include "../io.h"
 #include "instruction_utils.h"
+
+/* maybe move to its own file but probably not*/
+typedef union bytes {
+  int64_t value;
+  uint8_t byteArr[8];
+} bytes_t;
+
 int32_t get_param(uint8_t* instruction, short offset, short length) {
   int32_t temp = 0;
   instruction += offset / 8;
@@ -86,16 +93,45 @@ void halt(emulator_t* emulator) {
   dump(emulator);
 }
 
-int64_t get_reg(emulator_t* emulator, short index) {
+int64_t get_reg(emulator_t* emulator, uint8_t index) {
   if (index < 0 || index > 31) {
     halt(emulator);
   }
   return emulator->registers[index];
 }
 
-void set_reg(emulator_t* emulator, short index, int64_t value) {
+void set_reg(emulator_t* emulator, uint8_t index, int64_t value) {
   if (index < 0 || index > 31) {
     halt(emulator);
   }
   emulator->registers[index] = value;
+}
+
+int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg) {
+  bytes_t b;
+  int64_t result = get_reg(emulator, reg);
+  uint16_t offset = result+address;
+  if (address < 0 || address > 4096 || offset < 0 || offset > 4079)
+    halt(emulator);
+  
+  uint16_t i;
+  for (i = offset; i < offset+8; i++)
+    b.byteArr[offset+7-i] = emulator->memory[i];
+  return b.value;
+}
+
+void set_data(emulator_t* emulator, uint16_t address, uint8_t reg, int64_t value) {
+  bytes_t b;
+  int64_t result = get_reg(emulator, reg);
+  uint16_t offset = result+address;
+  b.value = result;
+  if (address < 0 || address > 4096 || offset < 0 || offset > 4079)
+    halt(emulator);
+  uint16_t writeStart = 7-(offset%8)+offset;
+  uint16_t i;
+  for (i=0; i < 8-(offset%8);i++) {
+    emulator->memory[writeStart-i] = b.byteArr[7-(offset%8)-i];
+  }
+
+  //emulator->memory[reg+address] = b.value;  
 }
