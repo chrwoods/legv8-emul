@@ -1,13 +1,13 @@
 B main
 
 addTwo:
-ADDI X0, X0, #2
+ADD X0,X0,X0
 BR LR
 
 main: 
-ADDI X1, XZR, #1
-PRNT X1
-ADD X0, X0, X1
-BL addTwo
+ADDI X0, XZR, #5
+ADDI X1, XZR, #4
+SUBS X3, X0, X1
+B.GT addTwo
 PRNT X0
 DUMP
