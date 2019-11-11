@@ -1,7 +1,6 @@
 #ifndef I_TYPE_FUNCS_H
 #define I_TYPE_FUNCS_H
 
-#include <stdio.h>
 #include "instruction_utils.h"
 #include "../emulator.h"
 

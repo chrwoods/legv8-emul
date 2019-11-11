@@ -1,7 +1,8 @@
 ADDI X1, X1, #1000
 PRNT X1
-STUR X1, [X2, #0]
+SUBI SP, SP, #16
+STUR X1, [SP, #0]
 ADDI X1, XZR, #23
-STUR X1, [X2, #8]
-LDUR X1, [X2, #0]
+STUR X1, [SP, #8]
+LDUR X1, [SP, #0]
 DUMP

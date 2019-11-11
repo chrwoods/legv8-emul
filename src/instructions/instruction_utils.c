@@ -156,16 +156,32 @@ void set_reg(emulator_t* emulator, uint8_t index, int64_t value, uint8_t is_alu)
   }
 }
 
+/*
+* May God rest anyone's soul who tries to maintain the following two methods
+*/
+
 int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg) {
   bytes_t b;
   int64_t result = get_reg(emulator, reg);
   uint16_t offset = result+address;
-  if (address < 0 || address > 4096 || offset < 0 || offset > 4079)
+  uint16_t offsetUpperBound = 0;
+  uint8_t* memtypepointer;
+  if (reg == 28) {
+    memtypepointer = emulator->stack;
+    offsetUpperBound = 512; // maybe need to change
+  } else if (reg == 29) {
+    memtypepointer = emulator->frame;
+    offsetUpperBound = 512; // maube need to change
+  } else {
+    memtypepointer = emulator->memory;
+    offsetUpperBound = 4079;
+  }
+  if (address < 0 || address > 4096 || offset < 0 || offset > offsetUpperBound)
     halt(emulator);
   
   uint16_t i;
   for (i = 0; i < 8; i++) {
-    b.byteArr[7-i] = emulator->memory[offset+i];
+    b.byteArr[7-i] = memtypepointer[offset+i];
     //printf("byte: %d, address: %d, index: %d.\n", b.byteArr[7-i], i, 7-i);
   }
   return b.value;
@@ -174,16 +190,28 @@ int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg) {
 void set_data(emulator_t* emulator, uint16_t address, uint8_t reg, int64_t value) {
   bytes_t b;
   int64_t result = get_reg(emulator, reg);
+  uint16_t offsetUpperBound = 0;
+  uint8_t* memtypepointer;
+  if (reg == 28) {
+    memtypepointer = emulator->stack;
+    offsetUpperBound = 512; // maybe need to change
+  } else if (reg == 29) {
+    memtypepointer = emulator->frame;
+    offsetUpperBound = 512; // maube need to change
+  } else {
+    memtypepointer = emulator->memory;
+    offsetUpperBound = 4079;
+  }
   uint16_t offset = result+address;
   b.value = value;
-  if (address < 0 || address > 4096 || offset < 0 || offset > 4079)
+  if (address < 0 || address > 4096 || offset < 0 || offset > offsetUpperBound)
     halt(emulator);
   uint16_t writeStart = 7-(offset%8)+offset;
   uint16_t i;
   printf("value: %ld.\n", b.value);
   for (i=0; i < 8-(offset%8);i++) {
     //printf("byte: %d, address: %d.\n", b.byteArr[i+(offset%8)], writeStart-i);
-    emulator->memory[writeStart-i] = b.byteArr[i+(offset%8)];
+    memtypepointer[writeStart-i] = b.byteArr[i+(offset%8)];
   }
 
   //emulator->memory[reg+address] = b.value;  
