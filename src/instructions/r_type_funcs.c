@@ -1,7 +1,8 @@
-#include "r_type_funcs.h"
+//#include "r_type_funcs.h"
 #include "instruction_utils.h"
 #include "../io.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void instruction_add(emulator_t* emulator, uint8_t* instruction) {
   uint8_t rm, shamt, rn, rd;
