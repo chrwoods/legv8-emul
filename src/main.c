@@ -33,21 +33,6 @@ int main(int argc, char *argv[]) {
     e->pc += 4;
     //printf("pc: %ld  filelen: %ld\n", e->pc, filelen);
   }
-  
-  /*uint16_t a = (1 << 9) + 1;
-  uint8_t b = 120;
-  uint16_t *pA = &a;
-  uint8_t *pB = &b;
-  
-  tree_t *t = malloc(sizeof(tree_t)); 
-  tree_init(t);
-  char* bs = "101";
-  uint8_t opcode = 5 << 5;
-  tree_node_t *leaf = tree_insert(t, bs, do_stuff);
-  (*leaf->fun_ptr)(pA,pB);
-  
-  void (*do_stuff_ptr)(uint16_t*,uint8_t*) = get_value_op(t, &opcode);
-  (*do_stuff_ptr)(pA,pB);*/
 
   return 0;
 }
