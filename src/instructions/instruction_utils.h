@@ -93,7 +93,7 @@ int64_t get_reg(emulator_t* emulator, short index) {
   return emulator->registers[index];
 }
 
-int64_t set_reg(emulator_t* emulator, short index, int64_t value) {
+void set_reg(emulator_t* emulator, short index, int64_t value) {
   if (index < 0 || index > 31) {
     instruction_halt(emulator, 0);
   }
