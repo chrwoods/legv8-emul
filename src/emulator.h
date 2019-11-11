@@ -13,6 +13,7 @@ typedef struct emulator_t {
   uint8_t* frame;
   short condition_codes[14];
   uint64_t pc;
+  int8_t cur; //currently written register, -1 if nothing being written, +32 if from ALU
   int8_t prev; //most recently written register
   int8_t gap; //second most recently written register
   uint64_t cycles; //instructions read

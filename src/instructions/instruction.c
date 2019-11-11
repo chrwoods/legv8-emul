@@ -56,5 +56,9 @@ short run_instruction(tree_t* opcode_tree, uint8_t* instruction, emulator_t* emu
     return -1;
   }
   instruction_handler(emulator, instruction);
+
+  // shift recently read instructions back by one
+  shift_read_instructions(emulator);
+  
   return 0;
 }

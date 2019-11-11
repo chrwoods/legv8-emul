@@ -91,20 +91,46 @@ void set_condition_codes(emulator_t* emulator, int64_t result) {
 
 void halt(emulator_t* emulator) {
   dump(emulator);
+  destroy_emulator(emulator);
+  exit(0);
+}
+
+void shift_read_instructions(emulator_t* emulator) {
+  emulator->gap = emulator->prev;
+  emulator->prev = emulator->cur;
+  emulator->cur = -1;
 }
 
 int64_t get_reg(emulator_t* emulator, uint8_t index) {
   if (index < 0 || index > 31) {
     halt(emulator);
   }
+
+  //TODO: fix
+  if (emulator->prev == index) {
+    emulator->data_hazards[0]++; 
+  } else if (emulator->prev == index - 32) {
+    emulator->data_hazards[2]++;
+  } else if (emulator->gap == index) {
+    emulator->data_hazards[1]++;
+  } else if (emulator->gap == index - 32) {
+    emulator->data_hazards[3]++;
+  }
+  
   return emulator->registers[index];
 }
 
-void set_reg(emulator_t* emulator, uint8_t index, int64_t value) {
+void set_reg(emulator_t* emulator, uint8_t index, int64_t value, uint8_t is_alu) {
   if (index < 0 || index > 31) {
     halt(emulator);
   }
-  emulator->registers[index] = value;
+  
+  if (index != 31) {
+    emulator->registers[index] = value;
+    emulator->cur = is_alu * 32 + index;
+  } else {
+    emulator->cur = -1;
+  }
 }
 
 int64_t get_data(emulator_t* emulator, uint16_t address, uint8_t reg) {
