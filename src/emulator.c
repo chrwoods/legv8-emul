@@ -31,14 +31,17 @@ emulator_t* init_emulator(uint8_t num_registers, uint16_t memory_size, uint16_t 
 
   e->pc = 0;
 
-  e->prev = -1;
-  e->gap = -1;
-  
-  e->cycles = 0;
-
-  for (int i = 0; i < 4; i++) {
-    e->data_hazards[i] = 0;
+  for (int i = 0; i < 3; i++) {
+    e->bypass[i] = -1;
+    e->no_bypass[i] = -1;
   }
+  
+  e->instructions = 0;
+
+  e->bypass_bubbles = 0;
+  e->no_bypass_bubbles = 0;
+
+  e->data_hazards = 0;
   e->control_hazards = 0;
   
   return e;

@@ -6,7 +6,7 @@ void instruction_ldur(emulator_t* emulator, uint8_t* instruction) {
   uint8_t op2, rn, rt;
   get_d_format_params(instruction, &address, &op2, &rn, &rt);
   int8_t result = get_data(emulator, address, rn);
-  set_reg(emulator, rt, result);
+  set_reg(emulator, rt, result, 0);
   printf("LDUR called: X%d = X%d[%d] with op:%d.\n", rt, rn, address, op2);
 }
 
