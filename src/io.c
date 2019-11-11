@@ -27,7 +27,7 @@ void print_line(char* to_print) {
 }
 
 void print_register(short num, int64_t content) {
-  printf("X%d %08lx %08ld\n", num, (uint64_t)content, content);
+  printf("X%d: %016lx (%ld)\n", num, (uint64_t)content, content);
 }
 
 void hexdump(uint8_t* start, size_t size) {
