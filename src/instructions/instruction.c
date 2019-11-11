@@ -7,10 +7,6 @@
 #include "i_type_funcs.h"
 #include "d_type_funcs.h"
 
-void placeholder(emulator_t* registers, uint8_t* instruction) {
-  return;
-}
-
 void init_r_type_funcs(tree_t* t) {
   tree_insert(t, OP_ADD, instruction_add);
   tree_insert(t, OP_ADDS, instruction_adds);
@@ -46,8 +42,6 @@ void init_d_type_funcs(tree_t* t) {
 tree_t* init_opcode_tree() {
   tree_t* t = malloc(sizeof(tree_t)); 
   tree_init(t);
-  
-  tree_insert(t, "01010100", placeholder);
   
   init_r_type_funcs(t);
   init_i_type_funcs(t);
