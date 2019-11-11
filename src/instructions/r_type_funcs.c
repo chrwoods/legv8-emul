@@ -87,17 +87,7 @@ void instruction_prnt(emulator_t* emulator, uint8_t* instruction) {
 }
 
 void instruction_dump(emulator_t* emulator, uint8_t* instruction) {
-  print_line("Registers:");
-  for (int i = 0; i < 32; i++) {
-    print_register(i, emulator->registers[i]);
-  }
-  print_line("");
-  print_line("Stack:");
-  hexdump(emulator->stack, STACK_SIZE);
-  print_line("");
-  print_line("Main Memory:");
-  hexdump(emulator->memory, MEM_SIZE);
-  //TODO: compile machine code into assembly for some godforsaken reason
+  dump(emulator);
 }
 
 void instruction_halt(emulator_t* emulator, uint8_t* instruction) {

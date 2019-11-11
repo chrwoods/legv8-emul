@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <ctype.h>
+#include "emulator.h"
 
 uint8_t* get_bytes_from_file(char* filename, long* filelen) {
   FILE* file = fopen(filename, "rb");
@@ -53,4 +54,18 @@ void hexdump(uint8_t* start, size_t size) {
 	   printable_char(start[i + 14]), printable_char(start[i + 15]));
   }
   printf("%08x\n", (int32_t) size);
+}
+
+void dump(emulator_t* emulator) {
+  print_line("Registers:");
+  for (int i = 0; i < 32; i++) {
+    print_register(i, emulator->registers[i]);
+  }
+  print_line("");
+  print_line("Stack:");
+  hexdump(emulator->stack, STACK_SIZE);
+  print_line("");
+  print_line("Main Memory:");
+  hexdump(emulator->memory, MEM_SIZE);
+  //TODO: compile machine code into assembly for some godforsaken reason
 }
