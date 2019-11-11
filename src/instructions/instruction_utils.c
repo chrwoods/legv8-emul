@@ -1,3 +1,4 @@
+
 #include "../io.h"
 #include "instruction_utils.h"
 #include <stdio.h>
@@ -91,7 +92,8 @@ void set_condition_codes(emulator_t* emulator, int64_t result) {
 }
 
 void halt(emulator_t* emulator) {
-  dump(emulator);
+  //dump(emulator);
+  printf("HALT CALLED AT: %lu\n", emulator->pc);
   //destroy_emulator(emulator);
   //exit(0);
 }

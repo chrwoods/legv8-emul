@@ -77,22 +77,45 @@ void instruction_br(emulator_t* emulator, uint8_t* instruction) {
   
 }
 
+// this function is a quick bodge to not count a Sheaffer-defined method in pipeline/cycle counts
+void ignore_cycle(emulator_t* emulator) {
+  emulator->instructions--;
+  emulator->bypass[0] = emulator->bypass[1];
+  emulator->bypass[1] = emulator->bypass[2];
+  emulator->no_bypass[0] = emulator->no_bypass[1];
+  emulator->no_bypass[1] = emulator->no_bypass[2];
+}
+
 void instruction_prnl(emulator_t* emulator, uint8_t* instruction) {
+  ignore_cycle(emulator);
   print_line("");
 }
 
 void instruction_prnt(emulator_t* emulator, uint8_t* instruction) {
+  ignore_cycle(emulator);
   uint8_t rm, shamt, rn, rd;
   get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
   print_register(rd, emulator->registers[rd]);
 }
 
 void instruction_dump(emulator_t* emulator, uint8_t* instruction) {
+  ignore_cycle(emulator);
   dump(emulator);
 }
 
 void instruction_halt(emulator_t* emulator, uint8_t* instruction) {
-  instruction_dump(emulator, instruction);
-  //TODO: change handle allocated memory before exit
-  exit(0);
+  ignore_cycle(emulator);
+  halt(emulator);
+}
+
+void instruction_mul(emulator_t* emulator, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  print_register(rd, emulator->registers[rd]);
+}
+
+void instruction_div(emulator_t* emulator, uint8_t* instruction) {
+  uint8_t rm, shamt, rn, rd;
+  get_r_format_params(instruction, &rm, &shamt, &rn, &rd);
+  print_register(rd, emulator->registers[rd]);
 }
