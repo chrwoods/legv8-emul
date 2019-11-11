@@ -115,7 +115,7 @@ ADDI SP, SP, #8
 BR LR
 
 main: ADDI X19, XZR, #8 // set initial memory address of array
-ADDI X20, XZR, #243 // set array size
+ADDI X20, XZR, #10 // set array size
 ADD X0, XZR, X19
 ADD X1, XZR, X20
 BL reverseFill
