@@ -25,14 +25,16 @@ int main(int argc, char *argv[]) {
   while (e->pc < filelen) {
     run_instruction(opcode_tree, bytes + e->pc, e);
     e->pc += 4;
-    //printf("pc: %ld  filelen: %ld\n", e->pc, filelen);
     e->instructions++;
   }
 
-  printf("Cycles: %lu\n", e->instructions);
+  printf("\nExtra Statistics:\n");
+  printf("----------------------\n");
+  printf("Unpipelined Cycles: %lu\n", e->instructions);
+  printf("Pipelined Cycles: %lu\n", e->instructions * 5 + e->no_bypass_bubbles);
   printf("Data Hazards: %u\n", e->data_hazards);
-  printf("Bypass Bubbles: %u\n", e->bypass_bubbles);
-  printf("No Bypass Bubbles: %u\n", e->no_bypass_bubbles);
+  printf("Control Hazards: %u\n", e->control_hazards);
+  printf("Pipelined Cycles: %lu\n", e->instructions * 5 + e->bypass_bubbles);
     
   return 0;
 }
